@@ -67,6 +67,9 @@ print(f"Storage:  {disk_used}/{disk_total} GB ({disk_usgprct}%)")
 print(f"Uptime:   {uptime_hrs} Hours, {uptime_mns} Minutes")
 print(f"CPU:      {get_cpu()}")
 print(f"Packages: {pacman_count} (Pacman), {flatpak_count} (Flatpak), {pip_count} (PIP)")
+
+# Temporary Feature - Not for long term usage.
+
 f = open('/home/nnmfa/Documents/Python/PyFetch/arch.txt', 'r')
 file_contents = f.read()
 print(file_contents)
