@@ -1,5 +1,7 @@
 import os, psutil, shutil, socket, rich, getpass, platform, distro, time, subprocess
 
+from system import cpu
+
 # Storage Vars
 
 KB = 1024
@@ -34,17 +36,7 @@ uptime_seconds = time.time() - boot_time
 uptime_hrs = int(uptime_seconds // 3600)
 uptime_mns = int((uptime_seconds % 3600) // 60)
 
-# CPU vars and functions
-
-def get_cpu():
-    try:
-        with open("/proc/cpuinfo") as f:
-            for line in f:
-                if "model name" in line:
-                    return line.strip().split(": ")[1]
-    except:
-        pass
-    return "Unknown CPU"
+# CPU vars and functions -- HAS BEEN MOVED TO ./system/cpu.py !
 
 # Package functions
 
@@ -65,7 +57,7 @@ print(f"OS:       {dist} {arch}")
 print(f"Memory:   {mem_used}/{mem_total} GB ({mem_usedprct}%)")
 print(f"Storage:  {disk_used}/{disk_total} GB ({disk_usgprct}%)")
 print(f"Uptime:   {uptime_hrs} Hours, {uptime_mns} Minutes")
-print(f"CPU:      {get_cpu()}")
+print(f"CPU:      {cpu.get_cpu()}")
 print(f"Packages: {pacman_count} (Pacman), {flatpak_count} (Flatpak), {pip_count} (PIP)")
 
 # Temporary Feature - Not for long term usage.
