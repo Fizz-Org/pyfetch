@@ -1,6 +1,6 @@
-import os, psutil, shutil, socket, rich, getpass, platform, distro, time, subprocess
+import shutil, socket, rich, getpass, platform
 
-from system import cpu, ram, misc
+from system import cpu, ram, misc, packages
 
 # Storage Vars
 
@@ -26,19 +26,7 @@ arch = platform.machine()
 
 # RAM vars -- HAS BEEN MOVED TO ./system/ram.py !
 
-# Package functions
-
-def get_pkgs(command, skip=0):
-    try:
-        output = subprocess.check_output(command, shell=True, text=True).splitlines()
-        return len(output) - skip
-    except subprocess.CalledProcessError:
-        return 0
-
-pacman_count = get_pkgs("pacman -Qq")
-yay_count = get_pkgs("yay -Qq")
-flatpak_count = get_pkgs("flatpak list --app --columns=application")
-pip_count = get_pkgs("pip list", skip=2)
+# Package functions -- HAS BEEN MOVED TO ./system/packages.py !
 
 print(f"\033[38;2;0;255;255m\n{usr}\033[0m@\033[38;2;0;255;255m{hostname}\033[0m\n----------------------")
 print(f"OS:       {misc.dist} {arch}")
@@ -46,7 +34,7 @@ print(f"Memory:   {ram.mem_used}/{ram.mem_total} GB ({ram.mem_usedprct}%)")
 print(f"Storage:  {disk_used}/{disk_total} GB ({disk_usgprct}%)")
 print(f"Uptime:   {misc.uptime_hrs} Hours, {misc.uptime_mns} Minutes")
 print(f"CPU:      {cpu.get_cpu()}")
-print(f"Packages: {pacman_count} (Pacman), {flatpak_count} (Flatpak), {pip_count} (PIP)")
+print(f"Packages: {packages.pacman_count} (Pacman), {packages.flatpak_count} (Flatpak), {packages.pip_count} (PIP)")
 
 # Temporary Feature - Not for long term usage.
 
