@@ -62,7 +62,7 @@ print(f"Packages: {pacman_count} (Pacman), {flatpak_count} (Flatpak), {pip_count
 
 # Temporary Feature - Not for long term usage.
 
-f = open('/home/nnmfa/Documents/Python/PyFetch/arch.txt', 'r')
+f = open('./ascii/arch.txt', 'r')
 file_contents = f.read()
 print(file_contents)
 f.close() 

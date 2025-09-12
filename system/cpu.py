@@ -1,4 +1,4 @@
-def get_cpu:
+def get_cpu():
     try:
         with open("/proc/cpuinfo") as f:
             for line in f:
