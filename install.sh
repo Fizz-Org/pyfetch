@@ -27,7 +27,7 @@ fi
 # ----------------
 # Clone repository
 # ----------------
-sudo git clone https://github.com/Fizz-Org/pyfetch.git "$INSTALL_DIR"
+sudo git clone -b v1.0-alpha https://github.com/Fizz-Org/pyfetch.git "$INSTALL_DIR"
 
 # -----------------------
 # Detect main Python file
