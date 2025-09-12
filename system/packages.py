@@ -2,9 +2,19 @@ import subprocess
 
 def get_pkgs(command, skip=0):
     try:
-        output = subprocess.check_output(command, shell=True, text=True).splitlines()
+        output = subprocess.check_output(
+            command,
+            shell=True,
+            text=True,
+            stderr=subprocess.DEVNULL 
+        ).splitlines()
+        
+        if len(output) <= skip:
+            return 0
+
         return len(output) - skip
-    except subprocess.CalledProcessError:
+
+    except (subprocess.CalledProcessError, FileNotFoundError):
         return 0
 
 pacman_count = get_pkgs("pacman -Qq")

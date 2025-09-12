@@ -6,6 +6,7 @@ print(f"Memory:   {ram.mem_used}/{ram.mem_total} GB ({ram.mem_usedprct}%)")
 print(f"Storage:  {storage.disk_used}/{storage.disk_total} GB ({storage.disk_usgprct}%)")
 print(f"Uptime:   {misc.uptime_hrs} Hours, {misc.uptime_mns} Minutes")
 print(f"CPU:      {cpu.get_cpu()}")
+print(f"GPU:      {gpu.return_gpu()}")
 print(f"Packages: {packages.pacman_count} (Pacman), {packages.flatpak_count} (Flatpak), {packages.pip_count} (PIP)")
 
 # Temporary Feature - Not for long term usage.
