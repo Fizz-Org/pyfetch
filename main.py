@@ -1,6 +1,6 @@
 import os, psutil, shutil, socket, rich, getpass, platform, distro, time, subprocess
 
-from system import cpu
+from system import cpu, ram
 
 # Storage Vars
 
@@ -17,13 +17,6 @@ disk_used = round(shutil.disk_usage("/").used / GB, 1)
 disk_usgprct = round(disk_used / disk_total * 100, 1)
 usr = getpass.getuser()
 arch = platform.machine()
-
-# Memory Vars
-
-mem = psutil.virtual_memory()
-mem_total = round(mem.total / (1024**3), 1)
-mem_used = round(mem.used / (1024**3), 1)
-mem_usedprct = round(mem_used / mem_total * 100, 1)
 
 # Distro Vars (Linux Only)
 
@@ -54,7 +47,7 @@ pip_count = get_pkgs("pip list", skip=2)
 
 print(f"\033[38;2;0;255;255m\n{usr}\033[0m@\033[38;2;0;255;255m{hostname}\033[0m\n----------------------")
 print(f"OS:       {dist} {arch}")
-print(f"Memory:   {mem_used}/{mem_total} GB ({mem_usedprct}%)")
+print(f"Memory:   {ram.mem_used}/{ram.mem_total} GB ({ram.mem_usedprct}%)")
 print(f"Storage:  {disk_used}/{disk_total} GB ({disk_usgprct}%)")
 print(f"Uptime:   {uptime_hrs} Hours, {uptime_mns} Minutes")
 print(f"CPU:      {cpu.get_cpu()}")
