@@ -49,9 +49,9 @@ if ! head -n 1 "$MAIN_SCRIPT" | grep -q "^#\!"; then
     sudo sed -i '1i #!/usr/bin/env python3' "$MAIN_SCRIPT"
 fi
 
-# -----------------------
+# --------------------------
 # Create virtual environment
-# -----------------------
+# --------------------------
 echo "Creating virtual environment..."
 sudo python3 -m venv "$VENV_DIR"
 
