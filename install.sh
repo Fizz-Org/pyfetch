@@ -44,7 +44,7 @@ echo "Detected main script: $MAIN_SCRIPT"
 # -----------------------
 # Add shebang if missing
 # -----------------------
-if ! head -n 1 "$MAIN_SCRIPT" | grep -q "^#\!"; then
+if ! head -n 1 "$MAIN_SCRIPT" | grep -q "^#!"; then
     echo "Adding shebang to $MAIN_SCRIPT"
     sudo sed -i '1i #!/usr/bin/env python3' "$MAIN_SCRIPT"
 fi
