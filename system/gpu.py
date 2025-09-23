@@ -9,23 +9,27 @@ def get_gpu():
     try:
         if system == "Windows":
             output = subprocess.check_output(
-                ["wmic", "path", "win32_VideoController", "get", "name"],
-                shell=True
+                ["powershell", "-Command", "Get-CimInstance Win32_VideoController | Select-Object -ExpandProperty Name"],
+                stderr=subprocess.DEVNULL
             ).decode(errors="ignore").splitlines()
-            gpus = [line.strip() for line in output if line.strip() and "Name" not in line]
+            gpus = [line.strip() for line in output if line.strip()]
 
         elif system == "Linux":
             output = subprocess.check_output(
-                "lspci | grep -i 'vga\\|3d\\|display'", shell=True
+                "lspci -nnk | grep -A3 -E 'VGA|3D|Display'", shell=True
             ).decode(errors="ignore").splitlines()
-            gpus = [re.sub(r".*:\s*", "", line).strip() for line in output if line.strip()]
+            gpus = []
+            for line in output:
+                if "VGA" in line or "3D" in line or "Display" in line:
+                    matches = re.findall(r"\[(.*?)\]", line)
+                    if matches:
+                        gpus.append(matches[1])
 
-        elif system == "Darwin":  # macOS
+        elif system == "Darwin":
             output = subprocess.check_output(
-                ["system_profiler", "SPDisplaysDataType"],
-                stderr=subprocess.DEVNULL
+                "ioreg -l | grep 'model'", shell=True
             ).decode(errors="ignore").splitlines()
-            gpus = [line.split(":")[1].strip() for line in output if "Chipset Model:" in line]
+            gpus = [re.sub(r'.*"([^"]+)"', r"\1", line).strip() for line in output if line.strip()]
 
         else:
             gpus = ["Unsupported OS"]
@@ -35,6 +39,12 @@ def get_gpu():
 
     return gpus
 
+
 def return_gpu():
     gpus = get_gpu()
-    return "\n".join(gpus)
+    if not gpus:
+        return "No GPU detected"
+    if len(gpus) == 1:
+        return gpus[0]
+    return ", ".join(gpus)
+
